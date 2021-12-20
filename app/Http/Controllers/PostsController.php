@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use File;
 use Inertia\Inertia;
 use App\Models\Post;
 use Illuminate\Http\Request;
@@ -62,7 +63,7 @@ class PostsController extends Controller
   {
     $image = $request->file('image');
     $imageName = md5(uniqid()) . "." . $image->getClientOriginalExtension();
-    $image->move(public_path('uploads'), $imageName);
+    $image->move(public_path('storage/uploads'), $imageName);
     return $imageName;
   }
 
@@ -90,9 +91,10 @@ class PostsController extends Controller
     return redirect()->route('post.index');
   }
 
-  public function destroy(Request $request, $id): \Illuminate\Http\RedirectResponse
+  public function destroy(Request $request, Post $post): \Illuminate\Http\RedirectResponse
   {
-    Post::find($id)->delete();
+    $post->delete();
+    File::delete(public_path('storage/uploads/' . $post->image));
     $request->session()->flash('success', 'Post deleted successfully!');
     return redirect()->route('post.index');
   }
