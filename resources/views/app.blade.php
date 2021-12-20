@@ -13,8 +13,6 @@
   <script src="{{ asset('/js/app.js') }}" defer></script>
 </head>
 <body>
-<div class="container">
   @inertia
-</div>
 </body>
 </html>

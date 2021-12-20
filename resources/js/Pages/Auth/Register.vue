@@ -1,29 +1,31 @@
 <template>
   <app-header></app-header>
-  <div class="row">
-    <div class="col-md-6 offset-md-3">
-      <form method="post" @submit.prevent="submit">
-        <h2 class="text-center">Create New Account</h2>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <form method="post" @submit.prevent="submit">
+          <h2 class="text-center">Create New Account</h2>
 
-        <errors-and-messages :errors="errors"></errors-and-messages>
+          <errors-and-messages :errors="errors"></errors-and-messages>
 
-        <div class="form-group">
-          <label for="name">Name</label>
-          <input type="text" class="form-control" name="name" id="name" v-model="form.name"/>
-        </div>
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" name="name" id="name" v-model="form.name"/>
+          </div>
 
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="text" class="form-control" name="email" id="email" v-model="form.email"/>
-        </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="text" class="form-control" name="email" id="email" v-model="form.email"/>
+          </div>
 
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input type="password" class="form-control" name="password" id="password" v-model="form.password"/>
-        </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" name="password" id="password" v-model="form.password"/>
+          </div>
 
-        <input type="submit" class="btn btn-primary btn-block" value="Register"/>
-      </form>
+          <input type="submit" class="btn btn-primary btn-block" value="Register"/>
+        </form>
+      </div>
     </div>
   </div>
 
