@@ -6,3 +6,14 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+
+.alert li {
+  font-size: 14px;
+}
+.logout-link {
+  border: none;
+  background: none;
+  display: inline;
+  color: #fff !important;
+}

@@ -2,39 +2,44 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Inertia\Inertia;
+use Inertia\Response;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
+  public function showLoginForm(): Response
+  {
+    return Inertia::render('Auth/Login');   // Vue component
+  }
 
-    use AuthenticatesUsers;
-
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = RouteServiceProvider::HOME;
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('guest')->except('logout');
+  /**
+   * @throws ValidationException
+   */
+  public function authenticate(Request $request): RedirectResponse
+  {
+    $credentials = $this->validate($request, [
+      'email' => ['required', 'email'],
+      'password' => ['required'],
+    ]);
+    if (Auth::attempt($credentials)) {
+      $request->session()->regenerate();
+      return redirect()->intended('/');
     }
+    return back()->withErrors([
+      'email' => 'The provided credentials do not match our records.',
+    ]);
+  }
+
+  public function logout(Request $request)
+  {
+    Auth::logout();
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+    return redirect('/');
+  }
 }
